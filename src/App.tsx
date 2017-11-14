@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import './App.css';
 
 const logo = require('./logo.svg');
