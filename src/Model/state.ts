@@ -15,7 +15,7 @@ export interface ApplicationState {
    * @type {string}
    * @memberof ApplicationState
    */
-  query?: string;
+  query: string;
   /**
    * @property
    * @type {{}[]}
