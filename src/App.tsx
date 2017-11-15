@@ -1,15 +1,15 @@
 import autobind from 'autobind-decorator';
-import fetchJsonp from 'fetch-jsonp';
-import React from 'react';
+import React, { Component } from 'react';
 import { ApplicationState, GalleryState } from './Model/state';
+import { executeSearch } from './Utils/fetch';
 import { Gallery, Photo, SearchForm } from './Components';
 import { GalleryAction, GalleryActionType } from './Model/action';
 import { galleryMachine } from './Model/machine';
 import './App.css';
 
-class App extends React.Component {
+class App extends Component {
   /**
-   * Default state
+   * @property
    * @type {ApplicationState}
    * @memberof App
    */
@@ -88,15 +88,10 @@ class App extends React.Component {
    */
   @autobind
   search(query: string) {
-    const encodedQuery = encodeURIComponent(query);
-
     setTimeout(() => {
-      fetchJsonp(
-        `https://api.flickr.com/services/feeds/photos_public.gne?lang=en-us&format=json&tags=${encodedQuery}`,
-        { jsonpCallback: 'jsoncallback' },
-      )
-        .then(res => res.json())
-        .then(data => {
+      executeSearch(query)
+        // tslint:disable-next-line:no-any
+        .then((data: any) => {
           this.transition({
             type: GalleryActionType.SEARCH_SUCCESS,
             items: data.items,
