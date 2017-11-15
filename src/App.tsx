@@ -1,9 +1,10 @@
 import fetchJsonp from 'fetch-jsonp';
-import React, { ChangeEvent, FormEvent } from 'react';
+import React from 'react';
 import { ApplicationState, GalleryState } from './Model/state';
 import { GalleryAction, GalleryActionType } from './Model/action';
 import { galleryMachine } from './Model/machine';
 import './App.css';
+import { SearchForm } from './Components/SearchForm';
 
 class App extends React.Component {
   /**
@@ -25,7 +26,7 @@ class App extends React.Component {
   constructor(props: {}) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeQuery = this.handleChangeQuery.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   /**
@@ -77,17 +78,15 @@ class App extends React.Component {
   }
 
   /**
-   * Handles controled form submission
+   * Handles controled form submission value
    * @private
-   * @param {FormEvent<HTMLFormElement>} event
+   * @param {string} query term
    * @memberof App
    */
-  handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.persist();
-    event.preventDefault();
+  handleSubmit(query: string) {
     this.transition({
       type: GalleryActionType.SEARCH,
-      query: this.state.query,
+      query,
     } as GalleryAction);
   }
 
@@ -121,57 +120,15 @@ class App extends React.Component {
   }
 
   /**
-   * @private handles search input change
-   * @param {ChangeEvent<HTMLInputElement>} event
+   * Called from a form
    * @memberof App
    */
-  handleChangeQuery(event: ChangeEvent<HTMLInputElement>) {
-    const { target: { value } } = event;
-    this.setState({ query: value });
+  handleCancel() {
+    this.transition({
+      type: GalleryActionType.CANCEL_SEARCH,
+    } as GalleryAction);
   }
 
-  renderForm(state: GalleryState) {
-    const searchText =
-      {
-        loading: 'Searching...',
-        error: 'Try search again',
-        start: 'Search',
-      }[state] || 'Search';
-
-    return (
-      <form className="ui-form" onSubmit={this.handleSubmit}>
-        <input
-          type="search"
-          className="ui-input"
-          value={this.state.query}
-          onChange={this.handleChangeQuery}
-          placeholder="Search Flickr for photos..."
-          disabled={state === GalleryState.Loading}
-        />
-        <div className="ui-buttons">
-          <button
-            type="submit"
-            className="ui-button"
-            disabled={state === GalleryState.Loading}
-          >
-            {searchText}
-          </button>
-          {state === GalleryState.Loading && (
-            <button
-              className="ui-button"
-              type="button"
-              onClick={() =>
-                this.transition({
-                  type: GalleryActionType.CANCEL_SEARCH,
-                } as GalleryAction)}
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-      </form>
-    );
-  }
   renderGallery(state: GalleryState) {
     return (
       <section className="ui-items" data-state={state}>
@@ -217,7 +174,11 @@ class App extends React.Component {
     const galleryState = this.state.gallery;
     return (
       <div className="ui-app" data-state={galleryState}>
-        {this.renderForm(galleryState)}
+        <SearchForm
+          state={galleryState}
+          handleCancel={this.handleCancel}
+          handleFormSubmit={this.handleSubmit}
+        />
         {this.renderGallery(galleryState)}
         {this.renderPhoto(galleryState)}
       </div>
