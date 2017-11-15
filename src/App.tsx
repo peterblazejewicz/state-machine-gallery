@@ -26,7 +26,7 @@ class App extends React.Component {
   constructor(props: {}) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+    this.cancelSearch = this.cancelSearch.bind(this);
   }
 
   /**
@@ -123,7 +123,7 @@ class App extends React.Component {
    * Called from a form
    * @memberof App
    */
-  handleCancel() {
+  cancelSearch() {
     this.transition({
       type: GalleryActionType.CANCEL_SEARCH,
     } as GalleryAction);
@@ -176,7 +176,7 @@ class App extends React.Component {
       <div className="ui-app" data-state={galleryState}>
         <SearchForm
           state={galleryState}
-          handleCancel={this.handleCancel}
+          handleCancel={this.cancelSearch}
           handleFormSubmit={this.handleSubmit}
         />
         {this.renderGallery(galleryState)}
