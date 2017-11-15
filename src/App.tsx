@@ -6,6 +6,7 @@ import { galleryMachine } from './Model/machine';
 import './App.css';
 import { SearchForm } from './Components/SearchForm';
 import { Photo } from './Components/Photo';
+import { Gallery } from './Components/Gallery';
 
 class App extends React.Component {
   /**
@@ -29,6 +30,7 @@ class App extends React.Component {
     this.startSearch = this.startSearch.bind(this);
     this.cancelSearch = this.cancelSearch.bind(this);
     this.exitPhotoHandler = this.exitPhotoHandler.bind(this);
+    this.selectPhoto = this.selectPhoto.bind(this);
   }
 
   /**
@@ -141,29 +143,12 @@ class App extends React.Component {
     } as GalleryAction);
   }
 
-  renderGallery(state: GalleryState) {
-    return (
-      <section className="ui-items" data-state={state}>
-        {state === 'error' ? (
-          <span className="ui-error">Uh oh, search failed.</span>
-        ) : (
-          // tslint:disable-next-line:no-any
-          this.state.items.map((item: any, index) => (
-            <img
-              src={item.media.m}
-              className="ui-item"
-              style={{ '--i': index }}
-              key={item.link}
-              onClick={() =>
-                this.transition({
-                  type: GalleryActionType.SELECT_PHOTO,
-                  item,
-                } as GalleryAction)}
-            />
-          ))
-        )}
-      </section>
-    );
+  // tslint:disable-next-line:no-any
+  selectPhoto(item: any) {
+    this.transition({
+      type: GalleryActionType.SELECT_PHOTO,
+      item,
+    } as GalleryAction);
   }
 
   render() {
@@ -175,7 +160,11 @@ class App extends React.Component {
           handleCancel={this.cancelSearch}
           handleFormSubmit={this.startSearch}
         />
-        {this.renderGallery(galleryState)}
+        <Gallery
+          state={galleryState}
+          items={this.state.items}
+          selectPhoto={this.selectPhoto}
+        />
         <Photo
           clickHandler={this.exitPhotoHandler}
           state={galleryState}
