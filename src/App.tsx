@@ -1,3 +1,4 @@
+import autobind from 'autobind-decorator';
 import fetchJsonp from 'fetch-jsonp';
 import React from 'react';
 import { ApplicationState, GalleryState } from './Model/state';
@@ -17,19 +18,6 @@ class App extends React.Component {
     items: [],
     query: '',
   };
-
-  /**
-   * Creates an instance of App.
-   * @param {{}} props
-   * @memberof App
-   */
-  constructor(props: {}) {
-    super(props);
-    this.startSearch = this.startSearch.bind(this);
-    this.cancelSearch = this.cancelSearch.bind(this);
-    this.exitPhotoHandler = this.exitPhotoHandler.bind(this);
-    this.selectPhoto = this.selectPhoto.bind(this);
-  }
 
   /**
    * Creates updated state (a command) for next state and action
@@ -85,6 +73,7 @@ class App extends React.Component {
    * @param {string} query term
    * @memberof App
    */
+  @autobind
   startSearch(query: string) {
     this.transition({
       type: GalleryActionType.SEARCH,
@@ -97,6 +86,7 @@ class App extends React.Component {
    * @param {string} query
    * @memberof App
    */
+  @autobind
   search(query: string) {
     const encodedQuery = encodeURIComponent(query);
 
@@ -125,6 +115,7 @@ class App extends React.Component {
    * Called from a form
    * @memberof App
    */
+  @autobind
   cancelSearch() {
     this.transition({
       type: GalleryActionType.CANCEL_SEARCH,
@@ -135,12 +126,14 @@ class App extends React.Component {
    * Called from photo to close a large version
    * @memberof App
    */
+  @autobind
   exitPhotoHandler() {
     this.transition({
       type: GalleryActionType.EXIT_PHOTO,
     } as GalleryAction);
   }
 
+  @autobind
   // tslint:disable-next-line:no-any
   selectPhoto(item: any) {
     this.transition({

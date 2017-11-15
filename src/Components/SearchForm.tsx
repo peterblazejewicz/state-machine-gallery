@@ -1,6 +1,7 @@
+import autobind from 'autobind-decorator';
 import React, { ChangeEvent, Component, FormEvent, MouseEvent } from 'react';
-import { GalleryState } from '../Model/state';
 import { Form } from './Form';
+import { GalleryState } from '../Model/state';
 
 /**
  * State of the form container
@@ -31,18 +32,13 @@ export class SearchForm extends Component<SearchFormProps, SearchFormState> {
   state: SearchFormState = {
     query: '',
   };
-  constructor(props: SearchFormProps) {
-    super(props);
-    this.handleQueryChanged = this.handleQueryChanged.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-  }
 
   /**
    * @private handles search input change
    * @param {ChangeEvent<HTMLInputElement>} event
    * @memberof SeachForm
    */
+  @autobind
   handleQueryChanged(event: ChangeEvent<HTMLInputElement>) {
     const { target: { value } } = event;
     this.setState({ query: value });
@@ -54,12 +50,19 @@ export class SearchForm extends Component<SearchFormProps, SearchFormState> {
    * @param {FormEvent<HTMLFormElement>} event
    * @memberof SeachForm
    */
+  @autobind
   handleFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.persist();
     event.preventDefault();
     this.props.handleFormSubmit(this.state.query);
   }
 
+  /**
+   * Handles cancel search click
+   * @param {MouseEvent<HTMLButtonElement>} event
+   * @memberof SearchForm
+   */
+  @autobind
   handleCancel(event: MouseEvent<HTMLButtonElement>) {
     this.props.handleCancel(event);
   }
