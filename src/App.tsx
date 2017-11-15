@@ -83,27 +83,24 @@ class App extends Component {
 
   /**
    * @private performs a search on Flickr
+   * @async
    * @param {string} query
    * @memberof App
    */
   @autobind
-  search(query: string) {
-    setTimeout(() => {
-      executeSearch(query)
-        // tslint:disable-next-line:no-any
-        .then((data: any) => {
-          this.transition({
-            type: GalleryActionType.SEARCH_SUCCESS,
-            items: data.items,
-          } as GalleryAction);
-        })
-        .catch(error => {
-          this.transition({
-            type: GalleryActionType.SEARCH_FAILURE,
-          } as GalleryAction);
-        });
-      // tslint:disable-next-line:align
-    }, 1000);
+  async search(query: string) {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const data = await executeSearch(query);
+      this.transition({
+        type: GalleryActionType.SEARCH_SUCCESS,
+        items: data.items,
+      } as GalleryAction);
+    } catch (error) {
+      this.transition({
+        type: GalleryActionType.SEARCH_FAILURE,
+      } as GalleryAction);
+    }
   }
 
   /**

@@ -6,11 +6,12 @@ export type executeSearchType = (query: string) => Promise<any>;
 
 /**
  * Fetches photos from Flickr using query term
+ * @async
  * @param {string} query
  * @returns {Promise<any>}
  */
 // tslint:disable-next-line:no-any
-export const executeSearch: executeSearchType = query => {
+export const executeSearch: executeSearchType = (query) => {
   const encodedQuery = encodeURIComponent(query);
   return new Promise((resolve, reject) => {
     fetchJsonp(
