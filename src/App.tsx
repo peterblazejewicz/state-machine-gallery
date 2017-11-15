@@ -1,12 +1,10 @@
 import fetchJsonp from 'fetch-jsonp';
 import React from 'react';
 import { ApplicationState, GalleryState } from './Model/state';
+import { Gallery, Photo, SearchForm } from './Components';
 import { GalleryAction, GalleryActionType } from './Model/action';
 import { galleryMachine } from './Model/machine';
 import './App.css';
-import { SearchForm } from './Components/SearchForm';
-import { Photo } from './Components/Photo';
-import { Gallery } from './Components/Gallery';
 
 class App extends React.Component {
   /**
