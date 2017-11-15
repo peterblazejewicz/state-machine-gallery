@@ -5,6 +5,7 @@ import { GalleryAction, GalleryActionType } from './Model/action';
 import { galleryMachine } from './Model/machine';
 import './App.css';
 import { SearchForm } from './Components/SearchForm';
+import { Photo } from './Components/Photo';
 
 class App extends React.Component {
   /**
@@ -25,8 +26,9 @@ class App extends React.Component {
    */
   constructor(props: {}) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.startSearch = this.startSearch.bind(this);
     this.cancelSearch = this.cancelSearch.bind(this);
+    this.exitPhotoHandler = this.exitPhotoHandler.bind(this);
   }
 
   /**
@@ -83,7 +85,7 @@ class App extends React.Component {
    * @param {string} query term
    * @memberof App
    */
-  handleSubmit(query: string) {
+  startSearch(query: string) {
     this.transition({
       type: GalleryActionType.SEARCH,
       query,
@@ -129,6 +131,16 @@ class App extends React.Component {
     } as GalleryAction);
   }
 
+  /**
+   * Called from photo to close a large version
+   * @memberof App
+   */
+  exitPhotoHandler() {
+    this.transition({
+      type: GalleryActionType.EXIT_PHOTO,
+    } as GalleryAction);
+  }
+
   renderGallery(state: GalleryState) {
     return (
       <section className="ui-items" data-state={state}>
@@ -153,22 +165,6 @@ class App extends React.Component {
       </section>
     );
   }
-  renderPhoto(state: GalleryState) {
-    if (state !== GalleryState.Photo) {
-      return null;
-    }
-    return (
-      <section
-        className="ui-photo-detail"
-        onClick={() =>
-          this.transition({
-            type: GalleryActionType.EXIT_PHOTO,
-          } as GalleryAction)}
-      >
-        <img src={this.state.item.media.m} className="ui-photo" />
-      </section>
-    );
-  }
 
   render() {
     const galleryState = this.state.gallery;
@@ -177,10 +173,14 @@ class App extends React.Component {
         <SearchForm
           state={galleryState}
           handleCancel={this.cancelSearch}
-          handleFormSubmit={this.handleSubmit}
+          handleFormSubmit={this.startSearch}
         />
         {this.renderGallery(galleryState)}
-        {this.renderPhoto(galleryState)}
+        <Photo
+          clickHandler={this.exitPhotoHandler}
+          state={galleryState}
+          item={this.state.item}
+        />
       </div>
     );
   }
