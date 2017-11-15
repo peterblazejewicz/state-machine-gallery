@@ -1,5 +1,6 @@
 import React, { SFC, MouseEvent } from 'react';
 import { GalleryState } from '../Model/state';
+import './Photo.css';
 
 /**
  * Contract for Photo props

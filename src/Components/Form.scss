@@ -1,0 +1,47 @@
+@import '../Styles/common';
+.ui-form {
+    margin-bottom: 1rem;
+}
+
+.ui-input {
+    @include shadow();
+    display: block;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    border: none;
+    font-size: 2rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+    &::-webkit-input-placeholder {
+        color: #CDCDCD;
+    }
+    &:focus {
+        outline: none;
+    }
+}
+
+.ui-buttons {
+    text-align: center;
+}
+
+.ui-button {
+    @include shadow();
+    display: inline-block;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background-color: #EB7452;
+    color: white;
+    height: 3rem;
+    padding: 0 3rem;
+    border-radius: 3rem;
+    margin: 0 1rem;
+    &[disabled] {
+        opacity: 0.5;
+    }
+    &[type="button"] {
+        background-color: #555;
+    }
+}

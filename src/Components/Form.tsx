@@ -1,5 +1,6 @@
 import React, { FormEvent, SFC } from 'react';
 import { GalleryState } from '../Model/state';
+import './Form.css';
 
 /**
  * Contract for Form Stateless component

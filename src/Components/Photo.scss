@@ -1,0 +1,19 @@
+.ui-photo-detail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-photo {
+    height: auto;
+    width: auto;
+    min-height: 50vh;
+    min-width: 50vw;
+    max-height: 100%;
+    max-width: 100%;
+}
