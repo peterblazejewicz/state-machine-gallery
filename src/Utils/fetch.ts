@@ -1,4 +1,3 @@
-import { executeSearchType } from './fetch';
 import fetchJsonp from 'fetch-jsonp';
 
 // tslint:disable-next-line:no-any

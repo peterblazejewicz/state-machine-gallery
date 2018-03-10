@@ -1,5 +1,5 @@
 /**
- * Appliaction properties
+ * Application properties
  * @export
  * @interface ApplicationState
  */

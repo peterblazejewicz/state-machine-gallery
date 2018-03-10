@@ -1,5 +1,6 @@
-import { GalleryState } from './state';
 import { GalleryActionType } from './action';
+import { GalleryState } from './state';
+
 // shortcuts
 const Action = GalleryActionType;
 const State = GalleryState;

@@ -1,6 +1,8 @@
-import React, { SFC } from 'react';
-import { GalleryState } from '../Model/state';
 import './Gallery.css';
+
+import React, { SFC } from 'react';
+
+import { GalleryState } from '../Model/state';
 
 /**
  * Contract for Gallery props

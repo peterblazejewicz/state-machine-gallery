@@ -1,11 +1,13 @@
+import './App.css';
+
 import autobind from 'autobind-decorator';
 import React, { Component } from 'react';
-import { ApplicationState, GalleryState } from './Model/state';
-import { executeSearch } from './Utils/fetch';
+
 import { Gallery, Photo, SearchForm } from './Components';
 import { GalleryAction, GalleryActionType } from './Model/action';
 import { galleryMachine } from './Model/machine';
-import './App.css';
+import { ApplicationState, GalleryState } from './Model/state';
+import { executeSearch } from './Utils/fetch';
 
 class App extends Component {
   /**

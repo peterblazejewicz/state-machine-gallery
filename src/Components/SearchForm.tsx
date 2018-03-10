@@ -1,7 +1,8 @@
 import autobind from 'autobind-decorator';
 import React, { ChangeEvent, Component, FormEvent, MouseEvent } from 'react';
-import { Form } from './Form';
+
 import { GalleryState } from '../Model/state';
+import { Form } from './Form';
 
 /**
  * State of the form container
